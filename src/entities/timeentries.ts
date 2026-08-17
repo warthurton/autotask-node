@@ -39,10 +39,10 @@ export class TimeEntries extends BaseEntity {
     return [
       {
         operation: 'createTimeEntries',
-        requiredParams: ['ticketId', 'timeEntries'],
+        requiredParams: ['timeEntries'],
         optionalParams: [],
         returnType: 'ITimeEntries',
-        endpoint: '/Tickets/{ticketId}/TimeEntries',
+        endpoint: '/TimeEntries',
       },
       {
         operation: 'getTimeEntries',
@@ -76,20 +76,15 @@ export class TimeEntries extends BaseEntity {
   }
 
   /**
-   * Create a new time entry under a ticket
-   * @param ticketId - The parent ticket ID
+   * Create a new time entry
    * @param timeEntries - The time entry data to create
    * @returns Promise with the created time entry
    */
-  async create(
-    ticketId: number,
-    timeEntries: ITimeEntries
-  ): Promise<ApiResponse<ITimeEntries>> {
-    const createEndpoint = `/Tickets/${ticketId}/TimeEntries`;
-    this.logger.info('Creating timeentries', { ticketId, timeEntries });
+  async create(timeEntries: ITimeEntries): Promise<ApiResponse<ITimeEntries>> {
+    this.logger.info('Creating timeentries', { timeEntries });
     return this.executeRequest(
-      async () => this.axios.post(createEndpoint, timeEntries),
-      createEndpoint,
+      async () => this.axios.post(this.endpoint, timeEntries),
+      this.endpoint,
       'POST'
     );
   }

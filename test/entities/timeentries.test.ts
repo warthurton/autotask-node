@@ -97,11 +97,11 @@ describe('TimeEntries Entity', () => {
         createMockItemResponse(mockResponse, 201)
       );
 
-      const result = await setup.entity.create(321, timeEntriesData);
+      const result = await setup.entity.create(timeEntriesData);
 
       expect(result.data).toEqual(mockResponse);
       expect(setup.mockAxios.post).toHaveBeenCalledWith(
-        '/Tickets/321/TimeEntries',
+        '/TimeEntries',
         timeEntriesData
       );
     });
